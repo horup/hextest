@@ -9,6 +9,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 declare var require;
 const flat = require("../images/hexes/grass.png");
 const soldiers = require("../images/units/soldiers.png");
+const black = require("../images/hexes/black.png");
 const app = new PIXI.Application();
 
 document.body.appendChild(app.view);
@@ -20,11 +21,44 @@ const Hex = Honycomb.extendHex({
 const Grid = Honycomb.defineGrid(Hex);
 const grid = Grid.rectangle({width:33, height:21});
 
-app.stage.scale.set(32);
 const gridContainer = new PIXI.Container();
 const unitContainer = new PIXI.Container();
-app.stage.addChild(gridContainer);
-app.stage.addChild(unitContainer);
+
+const stage = app.stage;
+const board = new PIXI.Container();
+board.scale.set(32);
+board.position.x = 100;
+stage.addChild(board);
+board.addChild(gridContainer);
+board.addChild(unitContainer);
+
+let marker = new PIXI.Sprite(PIXI.Texture.from(black));
+marker.width = 1;
+marker.height = 1;
+board.addChild(marker);
+
+board.interactive = true;
+board.addListener("mousedown", (e)=>
+{
+    let p = e.data.getLocalPosition(board);
+});
+
+board.addListener("mousemove", (e)=>
+{
+    let p = e.data.getLocalPosition(board);
+    let hexCoord = Grid.pointToHex(p);
+    let hex = grid.get(hexCoord);
+    if (hex != null)
+    {
+        marker.visible = true;
+        let p = hex.toPoint();
+        marker.position.set(p.x, p.y);
+    }
+    else
+    {
+        marker.visible = false;
+    }
+});
 
 const sprites = new Map<object, PIXI.Sprite>(); 
 
@@ -70,29 +104,3 @@ app.ticker.add(()=>{
     let p = grid.get({x:3, y:2}).toPoint();
     s.position.set(p.x, p.y);
 }
-
-//PIXI.Loader.shared.add("hex", "hex")
- /*
-// load the texture we need
-PIXI.loader.add('bunny', 'bunny.png').load((loader, resources) => {
- 
-    // This creates a texture from a 'bunny.png' image.
-    const bunny = new PIXI.Sprite(resources.bunny.texture);
- 
-    // Setup the position of the bunny
-    bunny.x = app.renderer.width / 2;
-    bunny.y = app.renderer.height / 2;
- 
-    // Rotate around the center
-    bunny.anchor.x = 0.5;
-    bunny.anchor.y = 0.5;
- 
-    // Add the bunny to the scene we are building.
-    app.stage.addChild(bunny);
- 
-    // Listen for frame updates
-    app.ticker.add(() => {
-         // each frame we spin the bunny around a bit
-        bunny.rotation += 0.01;
-    });
-});*/
