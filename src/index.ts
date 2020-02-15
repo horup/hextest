@@ -8,7 +8,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 declare var require;
 const flat = require("../images/hexes/grass.png");
-const soldiers = require("../images/units/soldiers.png");
+const soldiers = require("../images/units/timber2.png");
 const black = require("../images/hexes/black.png");
 const app = new PIXI.Application();
 
