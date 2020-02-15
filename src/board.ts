@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import * as Honycomb from 'honeycomb-grid';
-declare var requre;
+declare var require;
 const flat = require("../images/hexes/grass.png");
 
 export const Hex = Honycomb.extendHex({
