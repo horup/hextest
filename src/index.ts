@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import * as Honycomb from 'honeycomb-grid';
+import {Board} from './board';
 
 // https://www.redblobgames.com/grids/hexagons/
 // https://www.npmjs.com/package/honeycomb-grid
@@ -25,12 +26,14 @@ const gridContainer = new PIXI.Container();
 const unitContainer = new PIXI.Container();
 
 const stage = app.stage;
-const board = new PIXI.Container();
+const board = new Board();
+stage.addChild(board);
+/*const board = new PIXI.Container();
 board.scale.set(32);
 board.position.x = 100;
 stage.addChild(board);
 board.addChild(gridContainer);
-board.addChild(unitContainer);
+board.addChild(unitContainer);*/
 
 let marker = new PIXI.Sprite(PIXI.Texture.from(black));
 marker.width = 1;
@@ -63,7 +66,7 @@ board.addListener("mousemove", (e)=>
 const sprites = new Map<object, PIXI.Sprite>(); 
 
 app.ticker.add(()=>{
-    grid.forEach(hex=>
+    /*grid.forEach(hex=>
     {
         if (!sprites.has(hex))
         {
@@ -82,7 +85,9 @@ app.ticker.add(()=>{
             s.position.x = p.x * w;
             s.position.y = p.y * h;
         }
-    });
+    });*/
+
+    board.update();
 });
 
 {
