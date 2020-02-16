@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import * as Honycomb from 'honeycomb-grid';
-import {Board} from './board';
+import {HexBoard} from './HexBoard';
 
 // https://www.redblobgames.com/grids/hexagons/
 // https://www.npmjs.com/package/honeycomb-grid
@@ -26,7 +26,7 @@ const gridContainer = new PIXI.Container();
 const unitContainer = new PIXI.Container();
 
 const stage = app.stage;
-const board = new Board();
+const board = new HexBoard();
 stage.addChild(board);
 /*const board = new PIXI.Container();
 board.scale.set(32);

@@ -37,7 +37,7 @@ export class HexPiece extends PIXI.Sprite
     }
 }
 
-export class Board extends PIXI.Container
+export class HexBoard extends PIXI.Container
 {
     gridContainer:PIXI.Container = new PIXI.Container();
     grid = Grid.rectangle({width:1, height:1});
@@ -59,17 +59,6 @@ export class Board extends PIXI.Container
         this.addChild(this.gridContainer);
         
         this.update();
-        this.set(15,10, 3, colors.blue.light);
-        this.set(10,12, 3, colors.blue.light);
-        this.set(17,8, 2, colors.blue.light);
-        this.set(20,5, 2, colors.blue.light);
-
-        this.set(5,5, 3, colors.grey.dark);
-        this.set(5,5, 2, colors.grey.light);
-
-        this.set(24,15, 5, colors.grey.dark);
-        this.set(23,15, 2, colors.grey.light);
-        this.set(25,14, 2, colors.grey.light);
     }
 
     set(cx:number, cy:number, r:number, tint:number)
