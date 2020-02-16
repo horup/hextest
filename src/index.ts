@@ -20,7 +20,7 @@ const Hex = Honycomb.extendHex({
     size:0.5
 });
 const Grid = Honycomb.defineGrid(Hex);
-const grid = Grid.rectangle({width:33, height:21});
+const grid = Grid.rectangle({width:106, height:66});
 
 const gridContainer = new PIXI.Container();
 const unitContainer = new PIXI.Container();
@@ -66,27 +66,7 @@ board.addListener("mousemove", (e)=>
 const sprites = new Map<object, PIXI.Sprite>(); 
 
 app.ticker.add(()=>{
-    /*grid.forEach(hex=>
-    {
-        if (!sprites.has(hex))
-        {
-            let s = new PIXI.Sprite(PIXI.Texture.from(flat));
-            gridContainer.addChild(s);
-            sprites.set(hex, s);
-            s.width = 1;
-            s.height = 1;
-        }
-        else
-        {
-            let w = 1;
-            let h = 1;
-            let p = hex.toPoint();
-            let s = sprites.get(hex);
-            s.position.x = p.x * w;
-            s.position.y = p.y * h;
-        }
-    });*/
-
+   
     board.update();
 });
 

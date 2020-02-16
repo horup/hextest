@@ -40,13 +40,13 @@ export class HexPiece extends PIXI.Sprite
 export class Board extends PIXI.Container
 {
     gridContainer:PIXI.Container = new PIXI.Container();
-    grid = Grid.rectangle({width:33, height:21});
+    grid = Grid.rectangle({width:1, height:1});
     pieces = new Map<object, HexPiece>(); 
     
     constructor()
     {
         super();
-        this.scale.set(32);
+        this.scale.set(8);
         this.initialize();
     }
 
@@ -54,7 +54,7 @@ export class Board extends PIXI.Container
     {
         this.removeChildren();
         this.gridContainer = new PIXI.Container();
-        this.grid = Grid.rectangle({width:33, height:19});
+        this.grid = Grid.rectangle({width:106, height:66});
         this.pieces = new Map<object, HexPiece>(); 
         this.addChild(this.gridContainer);
         
@@ -75,23 +75,15 @@ export class Board extends PIXI.Container
     set(cx:number, cy:number, r:number, tint:number)
     {
         let center = this.grid.get({x:cx, y:cy});
-        if (center)
+        let inRange = this.grid.hexesInRange(center, r, true);
+        for (let hex of inRange)
         {
-            for (let y = cy - r; y <= cy + r; y++)
-            for (let x = cx - r; x <= cx + r; x++)
+            if (hex)
             {
-                let hex = this.grid.get({x:x, y:y});
-                if (hex)
+                let s = this.pieces.get(hex);
+                if (s!=null)
                 {
-                    let between = this.grid.hexesBetween(center, hex);
-                    if (between.length <= r)
-                    {
-                        let s = this.pieces.get(hex);
-                        if (s!=null)
-                        {
-                            s.tint = tint;
-                        }
-                    }
+                    s.tint = tint;
                 }
             }
         }
