@@ -12,7 +12,7 @@ export const colors =
     },
     blue:
     {
-        light:0x28AC60,
+        light:0x2B82B8,
         dark:0x2B82B8
     },
     grey:
@@ -54,17 +54,47 @@ export class Board extends PIXI.Container
     {
         this.removeChildren();
         this.gridContainer = new PIXI.Container();
-        this.grid = Grid.rectangle({width:33, height:21});
+        this.grid = Grid.rectangle({width:33, height:19});
         this.pieces = new Map<object, HexPiece>(); 
         this.addChild(this.gridContainer);
         
         this.update();
-        this.grid.forEach(hex=>
+        this.set(15,10, 3, colors.blue.light);
+        this.set(10,12, 3, colors.blue.light);
+        this.set(17,8, 2, colors.blue.light);
+        this.set(20,5, 2, colors.blue.light);
+
+        this.set(5,5, 3, colors.grey.dark);
+        this.set(5,5, 2, colors.grey.light);
+
+        this.set(24,15, 5, colors.grey.dark);
+        this.set(23,15, 2, colors.grey.light);
+        this.set(25,14, 2, colors.grey.light);
+    }
+
+    set(cx:number, cy:number, r:number, tint:number)
+    {
+        let center = this.grid.get({x:cx, y:cy});
+        if (center)
         {
-            let s = this.pieces.get(hex);
-            if (Math.random() > 0.75)
-                s.tint = colors.green.dark;
-        });
+            for (let y = cy - r; y <= cy + r; y++)
+            for (let x = cx - r; x <= cx + r; x++)
+            {
+                let hex = this.grid.get({x:x, y:y});
+                if (hex)
+                {
+                    let between = this.grid.hexesBetween(center, hex);
+                    if (between.length <= r)
+                    {
+                        let s = this.pieces.get(hex);
+                        if (s!=null)
+                        {
+                            s.tint = tint;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     update()
