@@ -46,7 +46,7 @@ export class Board extends PIXI.Container
     constructor()
     {
         super();
-        this.scale.set(8);
+        this.scale.set(32);
         this.initialize();
     }
 
@@ -104,10 +104,13 @@ export class Board extends PIXI.Container
             }
 
             let w = 1;
-            let h = 1 + 1/8;
-            let p = hex.toPoint();
+            let h = 1;
+           /* let p = hex.toPoint();
             s.position.x = p.x * w;
-            s.position.y = p.y * h;
+            s.position.y = p.y * h;*/
+
+            s.position.x = hex.x - hex.x / 4;
+            s.position.y = hex.x % 2 == 0 ? hex.y : hex.y + 0.5;
         });
     }
 }
